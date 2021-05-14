@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Character to IP Converter</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body class="container">
+<div class="text-center mt-4 card">
+    <div class="card-body">
+        <h1>Character to IP Converter</h1>
+		<p>This is just a little website that takes a character's binary data and converts it to an IPv4 Address.</p>
+		<input type="text" id="character" value="" oninput="change()">
+		<hr>
+        <h2>IP:
+            <pre><code id="ip">&nbsp;</code></pre>
+        </h2>
+        <h4>Binary:
+            <pre><code id="binary">&nbsp;</code></pre>
+        </h4>
+    </div>
+</div>
+<script>
+	function change() {
+		input = document.getElementById("character").value;
+		
+		if ([...input].length > 1) {
+			document.getElementById("character").value = [...input][0];
+			input = [...input][0];
+		}
+		
+		if (input.length > 0) {
+			codepoints = input.codePointAt(0).toString(2) + (input.length > 1 ? input.codePointAt(1).toString(2) : '');
+			binary = parseInt(codepoints, 2);
+			document.getElementById("binary").innerText = binary.toString(2);
+			document.getElementById("ip").innerText = (( binary >>> 24 ) + '.' + ( binary >> 16 & 255 ) + '.' + ( binary>> 8 & 255 ) + '.' + ( binary & 255 ));
+		} else {
+			document.getElementById("binary").innerHTML = '&nbsp;';
+			document.getElementById("ip").innerHTML = '&nbsp;';
+		}
+	}
+</script>
+</body>
+</html>
